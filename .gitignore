@@ -1,0 +1,4 @@
+# Mirrorify .gitignore
+
+node_modules
+*~
