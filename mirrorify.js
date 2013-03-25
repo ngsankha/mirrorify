@@ -50,9 +50,10 @@ function createMirror(req, res) {
         client.set(id + ".time", body.timeout);
         client.set(id + ".url1", body.url1);
         client.set(id + ".url2", body.url2, function(err, reply) {
-            var response = "{ 'url': '/" + id + "'}";
+            var response = {};
+            response.url = id;            
             res.writeHead(200, "OK", {'Content-Type': 'application/json'});
-            res.write(response);
+            res.write(JSON.stringify(response));
             res.end();
             console.log("Added a mirror at /" + id + " for " + body.url1);
         });
@@ -61,10 +62,11 @@ function createMirror(req, res) {
 
 // finally returns back the URL as a JSON string
 function doFinal(res, first, url1, url2) {
-    if(first) var response = "{ 'url': '" + url1 + "'}";
-    else var response = "{ 'url': '" + url2 + "'}";
+    var response = {};
+    if(first) response.url = url1;
+    else response.url = url2;
     res.writeHead(200, "OK", {'Content-Type': 'application/json'});
-    res.write(response);
+    res.write(JSON.stringify(response));
     res.end();
 }
 
